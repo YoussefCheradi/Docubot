@@ -1,0 +1,39 @@
+<!-- Affichage de la réponse et des boutons de feedback -->
+
+<!-- Formulaire de question -->
+<input type="text" id="userQuestion" placeholder="Posez votre question ici">
+<button onclick="submitQuestion()">Envoyer</button>
+
+<div id="responseArea"></div>
+<div id="feedbackArea">
+    Cette réponse est-elle utile ?
+    <button onclick="handleFeedback(true)">Oui</button>
+    <button onclick="handleFeedback(false)">Non</button>
+</div>
+
+<script>
+function handleFeedback(isUseful) {
+  var question = document.getElementById("userQuestion").value;
+  if (isUseful) {
+    // Gérer le feedback positif
+  } else {
+    // Appel AJAX à feedbackHandler.php pour les feedbacks négatifs
+    var xhr = new XMLHttpRequest();
+    xhr.open("POST", "feedbackHandler.php", true);
+    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+    xhr.onreadystatechange = function() {
+      if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
+        // Rediriger l'utilisateur vers la page de contact ou service client
+        window.location.href = "contactPage.html";
+      }
+    }
+    xhr.send("question=" + encodeURIComponent(question));
+  }
+}
+</script>
+<script>
+function submitQuestion() {
+  var question = document.getElementById("userQuestion").value;
+  // Appel AJAX à questionHandler.php
+}
+</script>
